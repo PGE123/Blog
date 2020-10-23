@@ -1,0 +1,8 @@
+
+spring:
+  profiles:
+    active: dev
+  thymeleaf:
+    mode: html
+server:
+  port: 8080
