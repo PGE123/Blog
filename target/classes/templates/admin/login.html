@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdminLogin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/me.css" th:href="@{/css/me.css}">
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
+        <div class="ui container">
+            <div class="ui middle aligned center aligned grid">
+                <div class="column">
+                    <h2 class="ui blue image header">
+                        <div class="content">
+                            Log-in to your account
+                        </div>
+                    </h2>
+                    <form class="ui large form" th:action="@{/admin/login}" method="post">
+                        <div class="ui stacked segment">
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="user icon"></i>
+                                    <input type="text" name="username" placeholder="Your username">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="ui left icon input">
+                                    <i class="lock icon"></i>
+                                    <input type="password" name="password" placeholder="You password">
+                                </div>
+                            </div>
+                            <button class="ui fluid large blue submit button">Login</button>
+                        </div>
+
+                        <div class="ui error mini message"></div>
+                        <div class="ui mini negative message" th:unless="${#strings.isEmpty(message)}" th:text="${message}"></div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/*/<th:block th:fragment="_fragments :: script">/*/-->
+    <!--/*/</th:block>/*/-->
+
+<script>
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier: 'username',
+                rules: [{
+                    type : 'empty',
+                    prompt: 'Please enter username'
+                }]
+            }
+        }
+    });
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier: 'password',
+                rules: [{
+                    type : 'empty',
+                    prompt: 'Please enter password'
+                }]
+            }
+        }
+    });
+</script>
+</body>
+</html>

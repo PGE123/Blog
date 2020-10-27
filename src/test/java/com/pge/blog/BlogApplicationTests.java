@@ -9,7 +9,10 @@ class BlogApplicationTests {
     @Test
     void contextLoads() {
 
-        System.out.println(reverseWords("you are my everything"));
+        SingleObject instance = SingleObject.getInstance();
+        SingleObject instance1 = SingleObject.getInstance();
+        System.out.println(instance == instance1);
+        instance.show();
 
     }
     String reverseWords(String s){
