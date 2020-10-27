@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @GetMapping
     public String loginPage(){
