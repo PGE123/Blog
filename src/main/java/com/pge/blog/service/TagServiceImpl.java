@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class TagServiceImpl implements TagService {
 
@@ -56,5 +58,10 @@ public class TagServiceImpl implements TagService {
     @Override
     public Tag getTagByName(String name) {
         return tagRepository.findByName(name);
+    }
+
+    @Override
+    public List<Tag> listTags() {
+        return tagRepository.findAll();
     }
 }

@@ -12,10 +12,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "t_blog")
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
 public class Blog {
 
     @Id
