@@ -9,6 +9,6 @@ public interface BlogService {
      void save(Blog blog);
      Page<Blog> listByPage(Pageable pageable, BlogQuery blog);
      Blog getBlog(Long id);
-     void update(Blog blog);
+     void update(Long id,Blog blog);
      void delete(Long id);
 }

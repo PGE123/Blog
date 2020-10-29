@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +27,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public void save(Blog blog) {
+        if(blog.getId() != null){
+            blog.setUpdateTime(new Date());
+        }else{
+            blog.setCreateTime(new Date());
+            blog.setUpdateTime(new Date());
+            blog.setViews(0);
+        }
         blogRepository.save(blog);
     }
 
@@ -54,8 +62,8 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public void update(Blog blog) {
-        Blog b = blogRepository.getOne(blog.getId());
+    public void update(Long id,Blog blog) {
+        Blog b = blogRepository.getOne(id);
         if(b == null)
             throw new NotFoundException("亲，你要跟新的blog不存在!!!");
         BeanUtils.copyProperties(blog,b);

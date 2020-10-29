@@ -3,6 +3,6 @@ spring:
   profiles:
     active: dev
   thymeleaf:
-    mode: LEGACYHTML5
+    mode: html
 server:
   port: 8080
