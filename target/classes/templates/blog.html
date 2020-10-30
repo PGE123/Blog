@@ -13,25 +13,26 @@
         <div class="ui top attached segment">
             <div class="ui horizontal link list">
                 <div class="item">
-                    <img src="../static/images/头像.png" alt="" class="ui avatar image">
-                    <div class="content"><a href="#" class="header">PGE</a></div>
+                    <img src="../static/images/头像.png" th:src="${blog.user.avatar}" alt="" class="ui avatar image">
+                    <div class="content"><a th:href="@{/about}" th:text="${blog.user.username}" class="header">PGE</a></div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i> <span>2020-10-01</span>
+                    <i class="calendar icon"></i> <span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2020-10-01</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i> <span>2342</span>
+                    <i class="eye icon"></i> <span th:text="${blog.views}">2342</span>
                 </div>
             </div>
         </div>
         <div class="ui attached segment">
             <!--图片区域-->
-            <img src="../static/images/p1.jpg" alt="" class="ui fluid rounded image">
+                <img src="../static/images/p1.jpg" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image" style="height:600px">
+
         </div>
         <div class="ui  attached padded segment">
             <!--内容-->
             <div class="ui right aligned basic segment">
-                <div class="ui orange basic label" th:text="${blog.flag}">原创</div>
+                <div class="ui orange basic label"><span th:text="${blog.flag}">原创</span></div>
             </div>
 
             <h2 class="ui center aligned header" th:text="${blog.title}">关于刻意练习的清单</h2>
@@ -406,7 +407,7 @@ h5,h6{font-size:1em;}
             </div>
 
             <!--赞赏-->
-            <div th:if="${blog.appreciation}">
+            <div>
                 <div class="ui center aligned basic segment">
                     <button id="payButton" class="ui orange basic circular button">赞赏</button>
                 </div>
@@ -414,75 +415,75 @@ h5,h6{font-size:1em;}
                     <div class="ui orange basic label">
                         <div class="ui images" style="font-size: inherit !important;">
                             <div class="image">
-                                <img src="../static/images/wechat.png" alt="" class="ui rounded bordered image" style="width: 120px">
-                                <div>微信</div>
+                                <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
+                                <div>支付宝</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
         </div>
         <div class="ui attached positive message" th:if="${blog.shareStatement}">
             <!--博客信息-->
             <div class="ui middle aligned grid">
                 <div class="eleven wide column">
                     <ui class="list">
-                        <li>作者：<span th:text="${blog.user.nickname}">李仁密</span><a href="#" th:href="@{/about}" target="_blank">（联系作者）</a></li>
+                        <li>作者：<span th:text="${blog.user.username}">李仁密</span><a href="#" th:href="@{/about}" target="_blank">（联系作者）</a></li>
                         <li>发表时间：<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd HH:mm')}">2017-10-02 09:08</span></li>
                         <li>版权声明：自由转载-非商用-非衍生-保持署名（创意共享3.0许可证）</li>
                         <li>公众号转载：请在文末添加作者公众号二维码</li>
                     </ui>
                 </div>
                 <div class="five wide column">
-                    <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui right floated rounded bordered image" style="width: 110px">
+                    <img src="../static/images/wechat%201.png" th:src="@{/images/wechat.png}" alt="" class="ui right floated rounded bordered image" style="width: 110px">
                 </div>
             </div>
         </div>
-        <div  class="ui bottom attached segment" th:if="${blog.commentabled}">
+        <div  class="ui bottom attached segment">
             <!--留言区域列表-->
             <div id="comment-container"  class="ui teal segment">
                 <div th:fragment="commentList">
                     <div class="ui threaded comments" style="max-width: 100%;">
                         <h3 class="ui dividing header">评论</h3>
-                        <div class="comment" th:each="comment : ${comments}">
+                        <div class="comment">
                             <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005" th:src="@{${comment.avatar}}">
+                                <img src="https://unsplash.it/100/100?image=1005">
                             </a>
                             <div class="content">
                                 <a class="author" >
-                                    <span th:text="${comment.nickname}">Matt</span>
-                                    <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">博主</div>
+                                    <span>Matt</span>
+                                    <div class="ui mini basic teal left pointing label m-padded-mini">博主</div>
                                 </a>
                                 <div class="metadata">
-                                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                    <span class="date" >Today at 5:42PM</span>
                                 </div>
-                                <div class="text" th:text="${comment.content}">
+                                <div class="text" >
                                     How artistic!
                                 </div>
                                 <div class="actions">
-                                    <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
+                                    <a class="reply" data-commentid="1" data-commentnickname="Matt"  onclick="reply(this)">回复</a>
                                 </div>
                             </div>
-                            <div class="comments" th:if="${#arrays.length(comment.replyComments)}>0">
-                                <div class="comment" th:each="reply : ${comment.replyComments}">
+                            <div class="comments">0">
+                                <div class="comment" >
                                     <a class="avatar">
-                                        <img src="https://unsplash.it/100/100?image=1005" th:src="@{${reply.avatar}}">
+                                        <img src="https://unsplash.it/100/100?image=1005">
                                     </a>
                                     <div class="content">
                                         <a class="author" >
-                                            <span th:text="${reply.nickname}">小红</span>
-                                            <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${reply.adminComment}">博主</div>
-                                            &nbsp;<span th:text="|@ ${reply.parentComment.nickname}|" class="m-teal">@ 小白</span>
+                                            <span >小红</span>
+                                            <div class="ui mini basic teal left pointing label m-padded-mini">博主</div>
+                                            &nbsp;<span class="m-teal">@ 小白</span>
                                         </a>
                                         <div class="metadata">
-                                            <span class="date" th:text="${#dates.format(reply.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
+                                            <span class="date">Today at 5:42PM</span>
                                         </div>
-                                        <div class="text" th:text="${reply.content}">
+                                        <div class="text">
                                             How artistic!
                                         </div>
                                         <div class="actions">
-                                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.id},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
+                                            <a class="reply" data-commentid="1" data-commentnickname="Matt"  onclick="reply(this)">回复</a>
                                         </div>
                                     </div>
                                 </div>
@@ -548,7 +549,7 @@ h5,h6{font-size:1em;}
                 </div>
             </div>
             <div id="comment-form" class="ui form">
-                <input type="hidden" name="blog.id" th:value="${blog.id}">
+                <input type="hidden" name="blog.id">
                 <input type="hidden" name="parentComment.id" value="-1">
                 <div class="field">
                     <textarea name="content" placeholder="请输入评论信息..."></textarea>
@@ -557,13 +558,13 @@ h5,h6{font-size:1em;}
                     <div class="field m-mobile-wide m-margin-bottom-small">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input type="text" name="nickname" placeholder="姓名" th:value="${session.user}!=null ? ${session.user.nickname}">
+                            <input type="text" name="nickname" placeholder="姓名">
                         </div>
                     </div>
                     <div class="field m-mobile-wide m-margin-bottom-small">
                         <div class="ui left icon input">
                             <i class="mail icon"></i>
-                            <input type="text" name="email" placeholder="邮箱" th:value="${session.user}!=null ? ${session.user.email}">
+                            <input type="text" name="email" placeholder="邮箱">
                         </div>
                     </div>
                     <div class="field  m-margin-bottom-small m-mobile-wide">

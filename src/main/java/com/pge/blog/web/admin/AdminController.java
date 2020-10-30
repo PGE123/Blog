@@ -79,7 +79,11 @@ public class AdminController {
         blog.setType(typeService.getType(blog.getType().getId()));
         blog.setTags(tagService.listTags(blog.getTagIds()));
         blog.setUser((User) httpSession.getAttribute("user"));
-        blogService.save(blog);
+        if(blog.getId() == null){
+            blogService.save(blog);
+        }else{
+            blogService.update(blog.getId(),blog);
+        }
         return redirectLIST;
     }
 

@@ -16,5 +16,6 @@ public interface TagService {
     Tag getTagByName(String name);
     List<Tag> listTags();
     List<Tag> listTags(String tagIds);
+    List<Tag> listTagByBlogSize(Integer size);
 
 }

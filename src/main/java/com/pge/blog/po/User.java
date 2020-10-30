@@ -15,10 +15,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "t_user")
-@NoArgsConstructor
-@Setter
-@Getter
-@ToString
+
 public class User {
 
     @Id
@@ -37,6 +34,25 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Blog> blogs = new ArrayList<>();
+
+    public User() {
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", type=" + type +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", blogs=" + blogs +
+                '}';
+    }
 
     public Long getId() {
         return id;

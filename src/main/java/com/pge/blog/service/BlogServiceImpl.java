@@ -3,13 +3,17 @@ package com.pge.blog.service;
 import com.pge.blog.NotFoundException;
 import com.pge.blog.dao.BlogRepository;
 import com.pge.blog.po.Blog;
+import com.pge.blog.util.MyBeanUtils;
 import com.pge.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,6 +29,7 @@ public class BlogServiceImpl implements BlogService {
     @Autowired
     BlogRepository blogRepository;
 
+    @Transactional
     @Override
     public void save(Blog blog) {
         if(blog.getId() != null){
@@ -37,6 +42,7 @@ public class BlogServiceImpl implements BlogService {
         blogRepository.save(blog);
     }
 
+    @Transactional
     @Override
     public Page<Blog> listByPage(Pageable pageable, BlogQuery blog) {
         return blogRepository.findAll(new Specification<Blog>() {
@@ -57,21 +63,42 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
+    public Page<Blog> list(Pageable pageable) {
+        return blogRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Blog> listSearchBlog(String searchContent, Pageable pageable) {
+        return blogRepository.listSearchBlog(searchContent,pageable);
+    }
+
+    @Transactional
+    @Override
     public Blog getBlog(Long id) {
         return blogRepository.getOne(id);
     }
 
+    @Transactional
     @Override
     public void update(Long id,Blog blog) {
         Blog b = blogRepository.getOne(id);
         if(b == null)
             throw new NotFoundException("亲，你要跟新的blog不存在!!!");
-        BeanUtils.copyProperties(blog,b);
-        blogRepository.save(blog);
+        BeanUtils.copyProperties(blog,b, MyBeanUtils.getNullPropertyNames(blog));
+        b.setUpdateTime(new Date());
+        blogRepository.save(b);
     }
 
+    @Transactional
     @Override
     public void delete(Long id) {
         blogRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Blog> listBlogByRecommend(Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
+        Pageable pageable = PageRequest.of(0, size, sort);
+        return blogRepository.listBlogByRecommend(pageable);
     }
 }

@@ -107,6 +107,7 @@ public class Blog {
                 '}';
     }
 
+
     public Long getId() {
         return id;
     }
