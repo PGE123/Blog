@@ -1,6 +1,5 @@
 package com.pge.blog.web;
 
-import com.pge.blog.NotFoundException;
 import com.pge.blog.service.BlogService;
 import com.pge.blog.service.TagService;
 import com.pge.blog.service.TypeService;
@@ -46,7 +45,7 @@ public class IndexController {
 
     @GetMapping("/blog/{id}")
     public String blog(@PathVariable Long id,Model model){
-        model.addAttribute("blog",blogService.getBlog(id));
+        model.addAttribute("blog",blogService.getAndConvert(id));
         return "blog";
     }
 }

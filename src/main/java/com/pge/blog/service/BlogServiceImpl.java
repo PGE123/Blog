@@ -3,6 +3,7 @@ package com.pge.blog.service;
 import com.pge.blog.NotFoundException;
 import com.pge.blog.dao.BlogRepository;
 import com.pge.blog.po.Blog;
+import com.pge.blog.util.MarkdownUtils;
 import com.pge.blog.util.MyBeanUtils;
 import com.pge.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
@@ -76,6 +77,18 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Blog getBlog(Long id) {
         return blogRepository.getOne(id);
+    }
+
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = blogRepository.getOne(id);
+        if(blog == null){
+            throw new NotFoundException("该博客不存在");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog,b);
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(b.getContent()));
+        return b;
     }
 
     @Transactional

@@ -2,6 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="_fragments :: head(~{::title})">
     <title>博客详情</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../static/css/typo.css">
+    <link rel="stylesheet" href="../static/css/animate.css">
+    <link rel="stylesheet" href="../static/lib/prism/prism.css">
+    <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
+    <link rel="stylesheet" href="../static/css/me.css">
 </head>
 <body>
 
@@ -412,11 +418,11 @@ h5,h6{font-size:1em;}
                     <button id="payButton" class="ui orange basic circular button">赞赏</button>
                 </div>
                 <div class="ui payQR flowing popup transition hidden">
-                    <div class="ui orange basic label">
+                    <div class="ui orange basic label">q
                         <div class="ui images" style="font-size: inherit !important;">
                             <div class="image">
-                                <img src="../static/images/wechat.jpg" th:src="@{/images/wechat.jpg}" alt="" class="ui rounded bordered image" style="width: 120px">
-                                <div>支付宝</div>
+                                <img src="../static/images/wechat.png" th:src="@{/images/wechat.png}" alt="" class="ui rounded bordered image" style="width: 120px">
+                                <div>微信</div>
                             </div>
                         </div>
                     </div>
@@ -446,23 +452,23 @@ h5,h6{font-size:1em;}
                 <div th:fragment="commentList">
                     <div class="ui threaded comments" style="max-width: 100%;">
                         <h3 class="ui dividing header">评论</h3>
-                        <div class="comment">
+                        <div class="comment" th:each="comment : ${comments}">
                             <a class="avatar">
                                 <img src="https://unsplash.it/100/100?image=1005">
                             </a>
                             <div class="content">
                                 <a class="author" >
-                                    <span>Matt</span>
+                                    <span th:text="${comment.nickname}">Matt</span>
                                     <div class="ui mini basic teal left pointing label m-padded-mini">博主</div>
                                 </a>
                                 <div class="metadata">
-                                    <span class="date" >Today at 5:42PM</span>
+                                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}" >Today at 5:42PM</span>
                                 </div>
-                                <div class="text" >
+                                <div class="text" th:text="${comment.content}" >
                                     How artistic!
                                 </div>
                                 <div class="actions">
-                                    <a class="reply" data-commentid="1" data-commentnickname="Matt"  onclick="reply(this)">回复</a>
+                                    <a class="reply" data-commentid="1" data-commentnickname="PGE" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname }" onclick="reply(this)">回复</a>
                                 </div>
                             </div>
                             <div class="comments">0">
@@ -548,8 +554,9 @@ h5,h6{font-size:1em;}
                     </div>
                 </div>
             </div>
+            <!--提交评论信息表-->
             <div id="comment-form" class="ui form">
-                <input type="hidden" name="blog.id">
+                <input type="hidden" name="blog.id" th:value="${blog.id}">
                 <input type="hidden" name="parentComment.id" value="-1">
                 <div class="field">
                     <textarea name="content" placeholder="请输入评论信息..."></textarea>
@@ -603,7 +610,15 @@ h5,h6{font-size:1em;}
 <!--底部footer-->
 <footer th:replace="_fragments :: footer"></footer>
 
-<!--/*/<th:block th:fragment="_fragments :: script">/*/-->
+<!--/*/<th:block th:replace="_fragments :: script">/*/-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/jquery.scrollto@2.1.2/jquery.scrollTo.min.js"></script>
+
+<script src="../static/lib/prism/prism.js"></script>
+<script src="../static/lib/tocbot/tocbot.min.js"></script>
+<script src="../static/lib/qrcode/qrcode.min.js"></script>
+<script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
 <!--/*/</th:block>/*/-->
 
 
@@ -639,10 +654,10 @@ h5,h6{font-size:1em;}
         position: 'left center'
     });
 
-    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:8080";
+    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:8081";
     var url = /*[[@{/blog/{id}(id=${blog.id})}]]*/"";
     var qrcode = new QRCode("qrcode", {
-        text: "我的微信是18574795116",
+        text: serurl+url,
         width: 110,
         height: 110,
         colorDark : "#000000",
@@ -701,45 +716,48 @@ h5,h6{font-size:1em;}
     });
 
 
-
-    $('#commentpost-btn').click(function () {
-        var boo = $('.ui.form').form('validate form');
-        if (boo) {
-            console.log('校验成功');
-            postData();
-        } else {
-            console.log('校验失败');
-        }
-
+    //验证评论表单是否校验成功
+    $('#commentpost-btn').click(function(){
+       var bool = $('.ui.form').form('validate form');
+       if(bool){
+           console.log('校验成功');
+           postData();
+       }else{
+           console.log('校验失败')
+       }
     });
 
-    function postData() {
-        $("#comment-container").load(/*[[@{/comments}]]*/"",{
-            "parentComment.id" : $("[name='parentComment.id']").val(),
-            "blog.id" : $("[name='blog.id']").val(),
-            "nickname": $("[name='nickname']").val(),
-            "email"   : $("[name='email']").val(),
-            "content" : $("[name='content']").val()
-        },function (responseTxt, statusTxt, xhr) {
-//        $(window).scrollTo($('#comment-container'),500);
+    //传送数据到后台
+   function postData(){
+       $('#comment-container').load(/*[[@{/comments}]]*/"",{
+           "parentComment.id" : $("[name = 'parentComment.id']").val(),
+           "blog.id" : $("[name = 'blog.id']").val(),
+           "nickname" : $("[name = 'nickname']").val(),
+           "email" : $("[name = 'email']").val(),
+           "content" :$("[name = 'content']").val()
+       },function(responseTxt,statusTxt,xhr){
+           $(window).scrollTo($('#comment-container'),500);
             clearContent();
-        });
+       });
+   }
+    //清除提交表单之后的表单里的内容
+    function clearContent(){
+       $("[name = 'parentComment.id']").val(-1);
+       $("[name= 'content']").val('');
+        $("[name = 'content']").attr("placeholder","请输入评论信息...").focus();
     }
 
-    function clearContent() {
-        $("[name='content']").val('');
-        $("[name='parentComment.id']").val(-1);
-        $("[name='content']").attr("placeholder", "请输入评论信息...");
+    //点击回复后的动作
+    function reply(obj){
+       var commentId = $(obj).data('commentid');
+       var commentNickname = $(obj).data('commentnickname');
+       $("[name = 'content']").attr("placeholder","@"+commentNickname).focus();
+       $("[name = 'parentComment.id']").val(commentId);
+       //点击回复后会滚动到评论表中
+       $(window).scrollTo($('#comment-form'),500);
     }
 
 
-    function reply(obj) {
-        var commentId = $(obj).data('commentid');
-        var commentNickname = $(obj).data('commentnickname');
-        $("[name='content']").attr("placeholder", "@"+commentNickname).focus();
-        $("[name='parentComment.id']").val(commentId);
-        $(window).scrollTo($('#comment-form'),500);
-    }
 
 
 </script>
