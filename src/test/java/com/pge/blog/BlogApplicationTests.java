@@ -1,18 +1,15 @@
 package com.pge.blog;
 
+import lombok.var;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class BlogApplicationTests {
 
+
     @Test
     void contextLoads() {
-
-        SingleObject instance = SingleObject.getInstance();
-        SingleObject instance1 = SingleObject.getInstance();
-        System.out.println(instance == instance1);
-        instance.show();
 
     }
     String reverseWords(String s){

@@ -2,6 +2,11 @@
 .myColor{
     background-color: rgb(17,110,169) !important;
 }
+
+.m-teal {
+    color: #00B5AD !important;
+}
+
 body {
     background-image: url("../images/background.jpg");
     background-attachment:fixed;

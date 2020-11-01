@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../static/lib/prism/prism.css">
     <link rel="stylesheet" href="../static/lib/tocbot/tocbot.css">
     <link rel="stylesheet" href="../static/css/me.css">
+    <link rel="stylesheet"
+          href="../../../../../../BaiduNetdiskDownload/SpringBoot实战-博客/Blog-完整功能源代码/blog/src/main/resources/static/css/me.css">
 </head>
 <body>
 
@@ -429,7 +431,6 @@ h5,h6{font-size:1em;}
                 </div>
             </div>
         </div>
-        </div>
         <div class="ui attached positive message" th:if="${blog.shareStatement}">
             <!--博客信息-->
             <div class="ui middle aligned grid">
@@ -454,103 +455,47 @@ h5,h6{font-size:1em;}
                         <h3 class="ui dividing header">评论</h3>
                         <div class="comment" th:each="comment : ${comments}">
                             <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005">
+                                <img src="https://unsplash.it/100/100?image=1005" th:src="@{/images/头像.png}">
                             </a>
                             <div class="content">
                                 <a class="author" >
                                     <span th:text="${comment.nickname}">Matt</span>
-                                    <div class="ui mini basic teal left pointing label m-padded-mini">博主</div>
+                                    <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${comment.adminComment}">博主</div>
                                 </a>
                                 <div class="metadata">
-                                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}" >Today at 5:42PM</span>
+                                    <span class="date" th:text="${#dates.format(comment.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
                                 </div>
-                                <div class="text" th:text="${comment.content}" >
+                                <div class="text" th:text="${comment.content}">
                                     How artistic!
                                 </div>
-                                <div class="actions">
-                                    <a class="reply" data-commentid="1" data-commentnickname="PGE" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname }" onclick="reply(this)">回复</a>
+                                <div classw="actions">
+                                    <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${comment.id},data-commentnickname=${comment.nickname}" onclick="reply(this)">回复</a>
                                 </div>
                             </div>
-                            <div class="comments">0">
-                                <div class="comment" >
+                            <div class="comments" th:if="${#arrays.length(comment.replyComments)} > 0">
+                                <div class="comment" th:each="reply : ${comment.replyComments}">
                                     <a class="avatar">
-                                        <img src="https://unsplash.it/100/100?image=1005">
+                                        <img src="https://unsplash.it/100/100?image=1005" th:src="@{/images/头像.png}">
                                     </a>
                                     <div class="content">
                                         <a class="author" >
-                                            <span >小红</span>
-                                            <div class="ui mini basic teal left pointing label m-padded-mini">博主</div>
-                                            &nbsp;<span class="m-teal">@ 小白</span>
+                                            <span th:text="${reply.nickname}">小红</span>
+                                            <div class="ui mini basic teal left pointing label m-padded-mini" th:if="${reply.adminComment}">博主</div>
+                                            &nbsp;<span th:text="|@ ${reply.parentComment.nickname}|" class="m-teal">@ 小白</span>
                                         </a>
                                         <div class="metadata">
-                                            <span class="date">Today at 5:42PM</span>
+                                            <span class="date" th:text="${#dates.format(reply.createTime,'yyyy-MM-dd HH:mm')}">Today at 5:42PM</span>
                                         </div>
-                                        <div class="text">
+                                        <div class="text" th:text="${reply.content}">
                                             How artistic!
                                         </div>
                                         <div class="actions">
-                                            <a class="reply" data-commentid="1" data-commentnickname="Matt"  onclick="reply(this)">回复</a>
+                                            <a class="reply" data-commentid="1" data-commentnickname="Matt" th:attr="data-commentid=${reply.id},data-commentnickname=${reply.nickname}" onclick="reply(this)">回复</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <!--/*-->
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005">
-                            </a>
-                            <div class="content">
-                                <a class="author">Elliot Fu</a>
-                                <div class="metadata">
-                                    <span class="date">Yesterday at 12:30AM</span>
-                                </div>
-                                <div class="text">
-                                    <p>This has been very useful for my research. Thanks as well!</p>
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                            <div class="comments">
-                                <div class="comment">
-                                    <a class="avatar">
-                                        <img src="https://unsplash.it/100/100?image=1005">
-                                    </a>
-                                    <div class="content">
-                                        <a class="author">Jenny Hess</a>
-                                        <div class="metadata">
-                                            <span class="date">Just now</span>
-                                        </div>
-                                        <div class="text">
-                                            Elliot you are always so right :)
-                                        </div>
-                                        <div class="actions">
-                                            <a class="reply">回复</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment">
-                            <a class="avatar">
-                                <img src="https://unsplash.it/100/100?image=1005">
-                            </a>
-                            <div class="content">
-                                <a class="author">Joe Henderson</a>
-                                <div class="metadata">
-                                    <span class="date">5 days ago</span>
-                                </div>
-                                <div class="text">
-                                    Dude, this is awesome. Thanks so much
-                                </div>
-                                <div class="actions">
-                                    <a class="reply">回复</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--*/-->
-
                     </div>
                 </div>
             </div>
@@ -565,13 +510,13 @@ h5,h6{font-size:1em;}
                     <div class="field m-mobile-wide m-margin-bottom-small">
                         <div class="ui left icon input">
                             <i class="user icon"></i>
-                            <input type="text" name="nickname" placeholder="姓名">
+                            <input type="text" name="nickname" placeholder="姓名" th:value="${session.user} != null ? ${session.user.username}">
                         </div>
                     </div>
                     <div class="field m-mobile-wide m-margin-bottom-small">
                         <div class="ui left icon input">
                             <i class="mail icon"></i>
-                            <input type="text" name="email" placeholder="邮箱">
+                            <input type="text" name="email" placeholder="邮箱" th:value="${session.user} != null ? ${session.user.email}">
                         </div>
                     </div>
                     <div class="field  m-margin-bottom-small m-mobile-wide">
@@ -723,7 +668,7 @@ h5,h6{font-size:1em;}
            console.log('校验成功');
            postData();
        }else{
-           console.log('校验失败')
+           console.log('校验失败');
        }
     });
 
@@ -744,7 +689,9 @@ h5,h6{font-size:1em;}
     function clearContent(){
        $("[name = 'parentComment.id']").val(-1);
        $("[name= 'content']").val('');
-        $("[name = 'content']").attr("placeholder","请输入评论信息...").focus();
+       $("[name= 'nickname']").val('');
+       $("[name= 'email']").val('');
+       $("[name = 'content']").attr("placeholder","请输入评论信息...").focus();
     }
 
     //点击回复后的动作
@@ -756,9 +703,6 @@ h5,h6{font-size:1em;}
        //点击回复后会滚动到评论表中
        $(window).scrollTo($('#comment-form'),500);
     }
-
-
-
 
 </script>
 </body>

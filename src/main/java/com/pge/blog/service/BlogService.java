@@ -12,6 +12,7 @@ public interface BlogService {
      Page<Blog> listByPage(Pageable pageable, BlogQuery blog);
      Page<Blog> list(Pageable pageable);
      Page<Blog> listSearchBlog(String searchContent,Pageable pageable);
+     Page<Blog> list(Long tagId,Pageable pageable);
      Blog getBlog(Long id);
      Blog getAndConvert(Long id);
      void update(Long id,Blog blog);

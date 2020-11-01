@@ -1,9 +1,6 @@
 package com.pge.blog.po;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -106,7 +103,6 @@ public class Blog {
                 ", description='" + description + '\'' +
                 '}';
     }
-
 
     public Long getId() {
         return id;
