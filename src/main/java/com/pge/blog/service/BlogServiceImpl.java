@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -123,5 +121,20 @@ public class BlogServiceImpl implements BlogService {
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
         Pageable pageable = PageRequest.of(0, size, sort);
         return blogRepository.listBlogByRecommend(pageable);
+    }
+
+    @Override
+    public Map<String, List<Blog>> listGroupByYear() {
+        Map<String,List<Blog>> map = new HashMap<>();
+        List<String> years = blogRepository.listGroupYear();
+        for(String year : years){
+            map.put(year,blogRepository.listByYear(year));
+        }
+        return map;
+    }
+
+    @Override
+    public Long blogCount() {
+        return blogRepository.count();
     }
 }

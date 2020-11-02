@@ -1,19 +1,29 @@
-
+/*------自定义Color------*/
 .myColor{
     background-color: rgb(17,110,169) !important;
+}
+
+/*-----opacity------*/
+.div-opacity{
+    background-color: rgba(255,255,255,0.3) !important;
+}
+
+.div-opacity-text{
+    opacity: 0.8 !important;
+}
+div-opacity-div{
+    background: rgba(255,255,255,0.1) !important;
 }
 
 .m-teal {
     color: #00B5AD !important;
 }
 
+/*背景图*/
 body {
-    background-image: url("../images/background.jpg");
+    background-image: url("../images/background1.jpg");
     background-attachment:fixed;
-    background-size: 100%;
-    no-repeat: center top;
-    height: 100%;
-    width: 100%;
+    background-size: cover;
 }
 
 .m-padded-mini {

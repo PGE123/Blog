@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+
 @Controller
 public class IndexController {
 
@@ -30,7 +31,7 @@ public class IndexController {
         model.addAttribute("page",blogService.list(pageable));
         model.addAttribute("types",typeService.listByBlogSize(5));
         model.addAttribute("tags",tagService.listTagByBlogSize(10));
-        model.addAttribute("recommendBlogs",blogService.listBlogByRecommend(8));
+        model.addAttribute("recommendBlogs",blogService.listBlogByRecommend(5));
         return "index";
     }
 
@@ -48,4 +49,5 @@ public class IndexController {
         model.addAttribute("blog",blogService.getAndConvert(id));
         return "blog";
     }
+
 }
