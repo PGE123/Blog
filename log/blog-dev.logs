@@ -352,3 +352,19 @@
 2020-11-03 09:58:22.290  INFO 12160 --- [restartedMain] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
 2020-11-03 09:58:22.294  INFO 12160 --- [restartedMain] com.pge.blog.BlogApplication             : Started BlogApplication in 2.521 seconds (JVM running for 2516.075)
 2020-11-03 09:58:22.299  INFO 12160 --- [restartedMain] .ConditionEvaluationDeltaLoggingListener : Condition evaluation unchanged
+2020-11-03 11:18:49.689  INFO 12160 --- [http-nio-8081-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-11-03 11:18:49.692  INFO 12160 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-11-03 11:18:49.730  INFO 12160 --- [http-nio-8081-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 38 ms
+2020-11-03 11:18:49.753  INFO 12160 --- [http-nio-8081-exec-1] com.pge.blog.aspects.LogAspect           : RequestMessage:RequestLog{url='http://localhost:8081/types/-1', ip='0:0:0:0:0:0:0:1', classMethod='com.pge.blog.web.TypeShowController.types', args=[-1, {}, Page request [number: 0, size 5, sort: updateTime: DESC]]}
+2020-11-03 11:18:49.805  INFO 12160 --- [http-nio-8081-exec-1] com.pge.blog.aspects.LogAspect           : Result: types
+2020-11-03 11:18:51.225  INFO 12160 --- [http-nio-8081-exec-7] com.pge.blog.aspects.LogAspect           : RequestMessage:RequestLog{url='http://localhost:8081/tags/-1', ip='0:0:0:0:0:0:0:1', classMethod='com.pge.blog.web.TagsShowController.tags', args=[-1, {}, Page request [number: 0, size 5, sort: updateTime: DESC]]}
+2020-11-03 11:18:51.261  INFO 12160 --- [http-nio-8081-exec-7] com.pge.blog.aspects.LogAspect           : Result: tags
+2020-11-03 11:18:52.719  INFO 12160 --- [http-nio-8081-exec-5] com.pge.blog.aspects.LogAspect           : RequestMessage:RequestLog{url='http://localhost:8081/archives', ip='0:0:0:0:0:0:0:1', classMethod='com.pge.blog.web.ArchivesController.archives', args=[{}]}
+2020-11-03 11:18:52.757  INFO 12160 --- [http-nio-8081-exec-5] com.pge.blog.aspects.LogAspect           : Result: archives
+2020-11-03 11:18:54.106  INFO 12160 --- [http-nio-8081-exec-4] com.pge.blog.aspects.LogAspect           : RequestMessage:RequestLog{url='http://localhost:8081/about', ip='0:0:0:0:0:0:0:1', classMethod='com.pge.blog.web.AboutShowController.about', args=[]}
+2020-11-03 11:18:54.110  INFO 12160 --- [http-nio-8081-exec-4] com.pge.blog.aspects.LogAspect           : Result: about
+2020-11-03 14:46:39.124  WARN 12160 --- [HikariPool-2 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Thread starvation or clock leap detected (housekeeper delta=3h18m23s90ms632µs800ns).
+2020-11-03 14:49:04.873  INFO 12160 --- [Thread-9] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-11-03 14:49:04.873  INFO 12160 --- [Thread-9] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-11-03 14:49:04.873  INFO 12160 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown initiated...
+2020-11-03 14:49:04.888  INFO 12160 --- [Thread-9] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Shutdown completed.
