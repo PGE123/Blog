@@ -9,10 +9,10 @@
 <nav th:replace="_fragments :: menu(3)"></nav>
 
 <!--中间内容-->
-<div  class="m-container m-padded-tb-big animated fadeIn">
+<div  class="m-container m-padded-tb-big animated bounceInDown">
     <div class="ui container">
         <!--header-->
-        <div class="ui top attached segment">
+        <div class="ui top attached segment div-opacity">
             <div class="ui middle aligned two column grid">
                 <div class="column">
                     <h3 class="ui teal header">Tags</h3>
@@ -21,13 +21,14 @@
                     共 <h2 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}"> 2 </h2> 个
                 </div>
             </div>
-
-            <div class="ui attached segment m-padded-tb-large">
+            <!--tag群-->
+            <div class="div-opacity-text ui attached segment m-padded-tb-large">
                 <a th:href="@{/tags/{id}(id=${tag.id})}" th:each="tag : ${tags}"  class="ui basic right pointing large label m-margin-tb-tiny" th:classappend="${tag.id == activeId} ? 'orange'">
                     <span th:text="${tag.name}">方法论</span> <div class="detail" th:text="${#arrays.length(tag.blogs)}">2</div>
                 </a>
             </div>
-            <div class="ui top attached teal segment">
+            <!--blog-->
+            <div class="div-opacity-text ui top attached teal segment">
                 <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
                     <div class="ui middle aligned mobile reversed stackable grid">
                         <div class="eleven wide column">
@@ -70,7 +71,7 @@
                 </div>
             </div>
             <!--footer-->
-            <div class="ui bottom attached segment">
+            <div class="div-opacity-text ui bottom attached segment">
                 <div class="ui middle aligned two column grid" th:if="${page.totalPages}>1">
                     <div class="column">
                         <a th:href="@{/(page = ${page.number} - 1)}" class="ui mini teal basic button" th:unless="${page.first}">上一页</a>

@@ -16,7 +16,7 @@
 <!--导航-->
 <nav th:replace="_fragments :: menu(10)"></nav>
 <!--中间内容-->
-<div id="waypoint" class="m-container-small m-padded-tb-big animated fadeIn">
+<div id="waypoint" class="m-container-small m-padded-tb-big animated bounceInDown">
     <div class="ui container">
         <div class="div-opacity-text ui top attached segment">
             <div class="div-opacity-text ui horizontal link list">
@@ -34,10 +34,7 @@
         </div>
         <div class="div-opacity-div ui attached segment">
             <!--图片区域-->
-            <div>
                 <img src="../static/images/p1.jpg" th:src="@{${blog.firstPicture}}" alt="" class="ui fluid rounded image" style="height:600px">
-            </div>
-
         </div>
         <div class="div-opacity-text ui attached padded segment">
             <!--内容-->

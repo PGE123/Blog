@@ -14,13 +14,13 @@
 <br>
 
 <!--中间内容-->
-<div  class="m-container m-padded-tb-small  animated fadeIn">
+<div  class="m-container m-padded-tb-small  animated bounceInDown">
     <div class="ui container">
-        <div class="ui stackable grid">
+        <div class="ui stackable grid div-opacity">
             <!--左边博客列表-->
-            <div class="eleven wide column div-opacity">
-            <!--header-->
-            <div class="ui top attached segment div-opacity-text">
+            <div class="eleven wide column">
+                <!--header-->
+                <div class="ui top attached segment div-opacity-text">
                 <div class="ui middle aligned two column grid">
                     <div class="column">
                         <h3 class="ui teal header">Blog</h3>
@@ -31,8 +31,8 @@
                 </div>
             </div>
 
-            <!--content-->
-            <div class="ui attached  segment div-opacity-text">
+                <!--content-->
+                <div class="ui attached  segment div-opacity-text">
                 <div class="ui padded vertical segment m-padded-tb-large" th:each="blog : ${page.content}">
                     <div class="ui middle aligned mobile reversed stackable grid">
                         <div class="eleven wide column">
@@ -139,8 +139,8 @@
                 <!--*/-->
             </div>
 
-            <!--footer-->
-            <div class="ui bottom attached segment div-opacity-text">
+                <!--footer-->
+                <div class="ui bottom attached segment div-opacity-text">
                 <div class="ui middle aligned two column grid" th:if="${page.totalPages}>1">
                     <div class="column">
                         <a th:href="@{/(page = ${page.number} - 1)}" class="ui mini teal basic button" th:unless="${page.first}">上一页</a>
@@ -151,10 +151,10 @@
                 </div>
             </div>
 
-        </div>
+            </div>
 
             <!--右边的top-->
-            <div class="five wide column div-opacity">
+            <div class="five wide column">
 
                 <!--分类-->
                 <div class="ui segments div-opacity-text">
@@ -172,7 +172,7 @@
                         <div class="ui fluid vertical menu">
                             <a th:href="@{/types/{id}(id=${type.id})}" class="item" th:each="type : ${types}">
                                 <span th:text="${type.name}"></span>
-                                <div class="ui teal basic left pointing label" th:text="${#arrays.length(type.blogs)}">13</div>
+                                <div class="ui teal basic left pointing tag label" th:text="${#arrays.length(type.blogs)}">13</div>
                             </a>
                         </div>
                     </div>
@@ -213,10 +213,8 @@
                     <img th:src="@{/images/wechat.png}" alt="" class="ui rounded image" >
                 </div>
             </div>
-
         </div>
     </div>
-
 </div>
 
 <br>
